@@ -122,6 +122,37 @@ $ bin/kafka-consumer-groups.sh \
 ```
 - `CURRENT-OFFSET`: 해당 그룹이 마지막으로 읽고 처리를 완료한 오프셋 번호(다음에 읽을 번호)를 나타냅니다.
 
+### 오프셋(Offset) 시각화
+토픽 내에서 메시지가 쌓이는 구조와 컨슈머 그룹의 오프셋 추적을 시각화하면 다음과 같습니다.
+
+```mermaid
+graph LR
+    subgraph Topic [카프카 토픽: email.send]
+        M0[메시지 0<br/>Offset: 0] --- M1[메시지 1<br/>Offset: 1]
+        M1 --- M2[메시지 2<br/>Offset: 2]
+        M2 --- M3[메시지 3<br/>Offset: 3]
+        M3 --- M4[메시지 4<br/>Offset: 4]
+        M4 --- M5[메시지 5<br/>Offset: 5]
+    end
+
+    subgraph ConsumerGroup [email-send-group]
+        CG[Current Offset: 5]
+    end
+
+    CG -.-> M5
+    style M0 fill:#f9f,stroke:#333,stroke-dasharray: 5 5
+    style M1 fill:#f9f,stroke:#333,stroke-dasharray: 5 5
+    style M2 fill:#f9f,stroke:#333,stroke-dasharray: 5 5
+    style M3 fill:#f9f,stroke:#333,stroke-dasharray: 5 5
+    style M4 fill:#f9f,stroke:#333,stroke-dasharray: 5 5
+    style M5 fill:#dfd,stroke:#333
+    style CG fill:#fff,stroke:#f66,stroke-width:4px
+```
+
+- **점선 박스**: 이미 처리가 완료된 메시지들입니다.
+- **실선 박스 (Offset 5)**: 다음에 읽어야 할 메시지 지점입니다.
+- **Current Offset**: 컨슈머 그룹이 '다음에 읽을 번호'를 가리키고 있는 상태입니다.
+
 ---
 
 ## 안 읽은 메시지부터 처리하기 (순차적 처리) <a name="sequential-processing"></a>
