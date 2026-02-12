@@ -1,8 +1,11 @@
 package emailsendconsumer.service;
 
 import emailsendconsumer.message.EmailSendMessage;
+import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +46,33 @@ public class EmailSendConsumer {
     }
     
     System.out.println("이메일 발송 완료: " + emailSendMessage.getSubject());
+  }
+
+  @RetryableTopic(
+      attempts = "3",
+      backoff = @Backoff(delay = 1000, multiplier = 2),
+      autoCreateTopics = "true",
+      // DLT를 사용하지 않으려면 dltStrategy를 NO_DLT로 설정한다.
+      dltStrategy = org.springframework.kafka.retrytopic.DltStrategy.NO_DLT
+  )
+  @KafkaListener(
+      topics = "email.send.retry-only",
+      groupId = "email-send-retry-only-group"
+  )
+  public void consumeRetryOnly(String message) {
+    System.out.println("[Retry Only] Kafka로부터 받아온 메시지: " + message);
+    EmailSendMessage emailSendMessage = EmailSendMessage.fromJson(message);
+
+    if (emailSendMessage.getTo().equals("fail@naver.com")) {
+      System.out.println("[Retry Only] 발송 실패 - 재시도 수행");
+      throw new RuntimeException("발송 실패");
+    }
+
+    System.out.println("[Retry Only] 이메일 발송 완료");
+  }
+
+  @DltHandler
+  public void handleDlt(String message, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+    System.out.println("[DLT] " + topic + " 로부터 넘어온 메시지: " + message);
   }
 }
