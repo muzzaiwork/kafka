@@ -68,6 +68,7 @@
 - [컨슈머 처리 성능과 파티션의 관계](./06-advanced/Consumer-Performance.md)
 - [파티션(Partition)의 개념과 특징](./06-advanced/Partition.md)
 - [파티션 할당 실습 (멀티 컨슈머)](./06-advanced/Partition-Assignment.md)
+- [토픽 파티션 관리 (조회, 설정, 변경)](./06-advanced/Partition-Management.md)
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)
 - [카프카 스트림즈와 커넥트 (Streams & Connect)](./06-advanced/Advanced.md#ecosystem)
 
