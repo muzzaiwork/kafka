@@ -119,8 +119,15 @@ $ bin/kafka-consumer-groups.sh \
     --bootstrap-server localhost:9092 \
     --group email-send-group \
     --describe
+
+# 실행 결과 예시
+Consumer group 'email-send-group' has no active members.
+
+GROUP            TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+email-send-group email.send      0          5               5               0               -               -               -
 ```
 - `CURRENT-OFFSET`: 해당 그룹이 마지막으로 읽고 처리를 완료한 오프셋 번호(다음에 읽을 번호)를 나타낸다.
+- 위 결과에서는 오프셋 4까지의 메시지(총 5개)를 읽었으므로 `CURRENT-OFFSET`이 5로 표시된다.
 
 ### 오프셋(Offset) 시각화
 토픽 내에서 메시지가 쌓이는 구조와 컨슈머 그룹의 오프셋 추적을 시각화하면 다음과 같다.
@@ -168,13 +175,15 @@ sequenceDiagram
     participant T as 토픽 (Topic)
     participant G as 컨슈머 그룹 (email-send-group)
     
-    Note over T: Offset 0~3: hello1~4 (이미 읽음)
-    Note over T: Offset 4: hello5 (새 메시지)
+    Note over T: Offset 0~4: hello1~5 (메시지 쌓임)
     
-    G->>T: 메시지 요청 (Current Offset: 4)
-    T-->>G: Offset 4 (hello5) 전달
-    Note over G: hello5 처리 완료
+    G->>T: 메시지 요청 (Current Offset: 0)
+    T-->>G: Offset 0~4 (hello1~5) 전달
+    Note over G: hello1~5 처리 완료
     G->>T: Offset 업데이트 (Current Offset: 5)
+    
+    Note over G: 그룹 상세 정보 확인 (--describe)
+    Note over G: CURRENT-OFFSET: 5 확인
 ```
 
 ### 정리
