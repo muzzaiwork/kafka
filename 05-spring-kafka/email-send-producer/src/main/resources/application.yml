@@ -1,9 +1,0 @@
-spring:
-  kafka:
-    # Kafka 서버 주소 (EC2에 카프카를 설치했으므로 해당 EC2의 Public IP를 입력해야 한다.)
-    bootstrap-servers: 13.124.31.10:9092
-    producer:
-      # 메시지의 key 직렬화 방식: 자바 객체를 문자열(String)로 변환해서 Kafka에 전송한다.
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # 메시지의 value 직렬화 방식: 자바 객체를 문자열(String)로 변환해서 Kafka에 전송한다.
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer

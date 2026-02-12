@@ -34,7 +34,7 @@ $ bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --delete --grou
 ### 2. Spring Boot 서버 실행 및 API 요청
 
 **서버 실행:**
-IDE에서 `EmailSendProducerApplication`을 실행하거나 터미널에서 아래 명령어를 입력한다.
+IDE에서 `ProducerApplication`을 실행하거나 터미널에서 아래 명령어를 입력한다.
 ```bash
 $ ./gradlew bootRun
 ```

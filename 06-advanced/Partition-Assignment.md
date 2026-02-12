@@ -13,8 +13,8 @@
 하나의 프로젝트를 서로 다른 포트에서 두 번 실행하여 멀티 컨슈머 환경을 구성한다.
 
 1. **IntelliJ 실행 설정**: 'Run/Debug Configurations' 페이지로 들어간다.
-2. **이름 설정**: 기존 실행 환경의 이름을 `EmailSendConsumerApplication-1` 등으로 변경하여 구분한다.
-3. **환경 추가**: 동일한 메인 클래스를 사용하는 새로운 실행 환경(`EmailSendConsumerApplication-2`)을 추가한다.
+2. **이름 설정**: 기존 실행 환경의 이름을 `ConsumerApplication-1` 등으로 변경하여 구분한다.
+3. **환경 추가**: 동일한 메인 클래스를 사용하는 새로운 실행 환경(`ConsumerApplication-2`)을 추가한다.
 4. **서버 실행**: 두 대의 서버를 각각 실행한다. `application.yml`에 `server.port: 0`으로 설정되어 있으므로 포트 충돌 없이 랜덤 포트로 실행된다.
 
 ### 2. API 요청 전송 및 로그 확인

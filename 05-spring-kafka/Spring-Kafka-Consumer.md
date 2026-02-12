@@ -12,9 +12,9 @@ graph LR
 
 ### 1. Spring Boot 프로젝트 셋팅
 
-`05-spring-kafka/email-send-consumer` 위치에 프로젝트를 구성한다.
+`consumer` 위치에 프로젝트를 구성한다.
 
-- **Artifact / Name**: `email-send-consumer`
+- **Artifact / Name**: `consumer`
 - **Dependencies**:
     - `Spring Boot DevTools`
     - `Spring Web`

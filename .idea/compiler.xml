@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="email-send-consumer" target="17" />
+      <module name="email-send-producer" target="17" />
+    </bytecodeTargetLevel>
+  </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="consumer" options="-parameters" />
+      <module name="consumer.main" options="-parameters" />
+      <module name="consumer.test" options="-parameters" />
       <module name="email-send-consumer" options="-parameters" />
       <module name="email-send-consumer.main" options="-parameters" />
       <module name="email-send-consumer.test" options="-parameters" />
       <module name="email-send-producer" options="-parameters" />
       <module name="email-send-producer.main" options="-parameters" />
       <module name="email-send-producer.test" options="-parameters" />
+      <module name="producer" options="-parameters" />
+      <module name="producer.main" options="-parameters" />
+      <module name="producer.test" options="-parameters" />
     </option>
   </component>
 </project>

@@ -13,8 +13,8 @@
 - **Project**: Gradle - Groovy (또는 사용자가 익숙한 빌드 도구)
 - **Language**: Java
 - **Spring Boot**: 3.x.x
-- **Artifact / Name**: `email-send-producer`
-- **Package name**: `emailsendproducer`
+- **Artifact / Name**: `producer`
+- **Package name**: `producer`
 - **Java**: 17
 - **Dependencies**:
     - `Spring Boot DevTools`
@@ -46,10 +46,10 @@ spring:
 ### 3. 프로젝트 구조 확인
 
 생성된 프로젝트의 기본 구조는 다음과 같다.
-- **위치**: `05-spring-kafka/email-send-producer`
+- **위치**: `producer`
 - **주요 파일**:
     - `build.gradle`: 의존성 및 자바 버전 설정
-    - `src/main/java/emailsendproducer/EmailSendProducerApplication.java`: 메인 애플리케이션 클래스
+    - `src/main/java/producer/ProducerApplication.java`: 메인 애플리케이션 클래스
     - `src/main/resources/application.yml`: 카프카 연결 설정
 
 ---
