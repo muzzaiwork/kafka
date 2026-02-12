@@ -62,6 +62,7 @@
     - [@RetryableTopic을 이용한 재시도 정책 설정](./05-spring-kafka/Spring-Kafka-Retry.md#재시도retry-정책-변경하기)
 - [Spring Boot 카프카 DLT(Dead Letter Topic) 구현](./05-spring-kafka/Spring-Kafka-DLT.md)
     - [재시도 실패 메시지 보관 및 DLT 설정](./05-spring-kafka/Spring-Kafka-DLT.md#재시도조차-실패한-메시지를-따로-보관하기-dlt)
+    - [DLT 메시지 사후 처리 실습](./05-spring-kafka/Spring-Kafka-Dlt-Post-Processing.md)
 
 ### 6. 상세 동작 및 활용 (Advanced)
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)
