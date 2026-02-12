@@ -93,3 +93,11 @@ graph TD
     style Node2 fill:#f9f9f9,stroke:#333
     style Node3 fill:#f9f9f9,stroke:#333
 ```
+
+---
+
+## ➡️ 다음 단계
+
+3대의 서버가 연동된 것을 확인했다면, 리더가 아닌 팔로워 파티션이 있는 노드로 메시지를 보냈을 때 어떻게 처리되는지 확인해 본다.
+
+- [[실습] 팔로워 파티션에 메시지 전송 테스트](./Follower-Message-Test.md)
