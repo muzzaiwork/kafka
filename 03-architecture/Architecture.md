@@ -10,6 +10,49 @@
 
 ---
 
+## CLI를 활용한 토픽 관리 <a name="topic-cli"></a>
+
+실제 운영 환경이나 실습 시 CLI(Command Line Interface)를 통해 토픽을 직접 생성하고 관리할 수 있습니다.
+
+### 1. 토픽 생성하기
+`kafka-topics.sh` 스크립트에 `--create` 옵션을 사용하여 새로운 토픽을 생성합니다.
+
+```bash
+# kafka 디렉터리 안에서 실행 (예: kafka_2.13-4.0.0)
+$ bin/kafka-topics.sh \
+    --bootstrap-server localhost:9092 \
+    --create \
+    --topic email.send
+```
+
+### 2. 토픽 조회하기
+생성된 토픽의 목록을 확인하거나 특정 토픽의 상세 정보를 조회합니다.
+
+**전체 목록 조회:**
+```bash
+$ bin/kafka-topics.sh \
+    --bootstrap-server localhost:9092 \
+    --list
+```
+
+**특정 토픽 상세 정보 조회:**
+```bash
+$ bin/kafka-topics.sh \
+    --bootstrap-server localhost:9092 \
+    --describe --topic email.send
+```
+
+### 3. 토픽 삭제하기
+더 이상 사용하지 않는 토픽을 삭제합니다.
+
+```bash
+$ bin/kafka-topics.sh \
+    --bootstrap-server localhost:9092 \
+    --delete --topic email.send
+```
+
+---
+
 ## 카프카의 기본 구성 요소 (Producer, Consumer, Topic) <a name="components"></a>
 
 카프카의 전체적인 동작 흐름은 **프로듀서**, **컨슈머**, 그리고 **토픽** 간의 상호작용으로 이루어집니다.

@@ -20,6 +20,7 @@
 
 ### 3. 카프카 기본 아키텍처 (Architecture)
 - [토픽(Topic)과 파티션(Partition)](./03-architecture/Architecture.md)
+- [CLI를 활용한 토픽 관리](./03-architecture/Architecture.md#topic-cli)
 - [카프카의 기본 구성 요소](./03-architecture/Architecture.md#components)
 - [브로커(Broker)와 클러스터(Cluster)](./03-architecture/Architecture.md#broker)
 - [리플리케이션(Replication)과 ISR](./03-architecture/Architecture.md#replication)
