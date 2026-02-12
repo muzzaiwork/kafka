@@ -22,6 +22,7 @@
 - [[실습] 카프카 서버 총 3대 셋팅하기](./02-setup/Multi-Broker-Setup.md)
 - [[실습] 카프카 서버 3대 연동 확인하기](./02-setup/Multi-Broker-Verification.md)
 - [[실습] 팔로워 파티션에 메시지 전송 테스트](./02-setup/Follower-Message-Test.md)
+- [[실습] 리더 장애 및 고가용성 테스트](./02-setup/Leader-Failure-Test.md)
 - [참고) 카프카 명령어와 쉘 스크립트](./02-setup/Kafka-Install.md#kafka-cli-info)
 - [로컬 환경 설치 및 실행](./02-setup/Kafka-Install.md)
 - [주키퍼(Zookeeper)와 카프카 서버 구성](./02-setup/Kafka-Install.md#components)
