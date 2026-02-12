@@ -65,6 +65,7 @@
     - [DLT 메시지 사후 처리 실습](./05-spring-kafka/Spring-Kafka-Dlt-Post-Processing.md)
 
 ### 6. 상세 동작 및 활용 (Advanced)
+- [컨슈머 처리 성능과 파티션의 관계](./06-advanced/Consumer-Performance.md)
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)
 - [카프카 스트림즈와 커넥트 (Streams & Connect)](./06-advanced/Advanced.md#ecosystem)
 
