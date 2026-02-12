@@ -129,7 +129,7 @@ $ bin/kafka-server-start.sh -daemon config/server.properties
 
 ---
 
-### ✅ 참고) 카프카 명령어와 쉘 스크립트
+### ✅ 참고) 카프카 명령어와 쉘 스크립트 <a name="kafka-cli-info"></a>
 
 카프카 디렉터리 내부의 `bin` 디렉터리에는 다양한 쉘 스크립트 파일(`.sh`)이 존재합니다. 실제 카프카 명령어를 실행할 때 이 스크립트들을 활용합니다.
 
