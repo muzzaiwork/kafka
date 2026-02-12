@@ -42,7 +42,9 @@
     - [CLI를 활용한 메시지 전송](./04-producer-consumer/ProducerConsumer.md#producer)
 - [컨슈머와 컨슈머 그룹(Consumer Group)](./04-producer-consumer/ProducerConsumer.md#consumer)
     - [CLI를 활용한 메시지 조회](./04-producer-consumer/ProducerConsumer.md#consumer)
-    - [컨슈머 그룹의 분산 처리 및 고가용성](./04-producer-consumer/ProducerConsumer.md#consumer)
+    - [컨슈머 그룹의 분산 처리 및 고가용성](./04-producer-consumer/ProducerConsumer.md#consumer-group)
+    - [오프셋(Offset)과 소비 지점 관리](./04-producer-consumer/ProducerConsumer.md#offset)
+    - [안 읽은 메시지부터 처리하기 (실습)](./04-producer-consumer/ProducerConsumer.md#sequential-processing)
 - [카프카의 메시지 보관 방식 (Persistence)](./04-producer-consumer/ProducerConsumer.md#persistence)
     - [메시지 읽기 후 삭제되지 않는 특징](./04-producer-consumer/ProducerConsumer.md#persistence)
 

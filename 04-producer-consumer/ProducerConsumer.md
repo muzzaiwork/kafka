@@ -63,8 +63,9 @@ sequenceDiagram
     K->>C: 다시 읽기 요청 시 동일 메시지 재전달 가능
 ```
 
-### 컨슈머 그룹 (Consumer Group)
+### 컨슈머 그룹 (Consumer Group) <a name="consumer-group"></a>
 컨슈머들은 보통 **컨슈머 그룹**이라는 단위로 묶여서 동작합니다.
+- **메시지 소비 위치 기록**: 각 컨슈머 그룹은 어디까지 메시지를 읽었는지 **오프셋(Offset)**이라는 번호로 기록합니다.
 - **분산 처리**: 대규모 데이터를 처리하기 위해 여러 컨슈머가 메시지를 나누어서 처리할 수 있습니다.
 - **고가용성**: 그룹 내의 한 컨슈머에 장애가 발생하더라도 다른 컨슈머가 작업을 이어받아 처리할 수 있습니다.
 
@@ -80,3 +81,70 @@ graph LR
     Topic --> C1
     Topic --> C2
 ```
+
+---
+
+## 오프셋(Offset)과 소비 지점 관리 <a name="offset"></a>
+
+### 오프셋(Offset)이란?
+카프카 토픽에 저장된 메시지의 순서를 나타내는 **고유 번호**입니다.
+- 인덱스처럼 **0부터 시작**합니다.
+- 컨슈머 그룹은 다음에 읽을 메시지의 번호인 `CURRENT-OFFSET`을 관리합니다.
+
+### [실습] 컨슈머 그룹을 지정해서 메시지 읽기
+
+컨슈머 그룹을 지정하면, 그룹별로 독립적인 오프셋 관리가 가능합니다.
+
+**1. 그룹을 지정하여 메시지 소비:**
+```bash
+# email-send-group이라는 그룹으로 메시지 읽기
+$ bin/kafka-console-consumer.sh \
+    --bootstrap-server localhost:9092 \
+    --topic email.send \
+    --from-beginning \
+    --group email-send-group
+```
+- `--group email-send-group`: 기존 그룹이 없으면 생성하고, 오프셋 기록이 있으면 그 이후부터 읽습니다.
+
+**2. 컨슈머 그룹 목록 확인:**
+```bash
+$ bin/kafka-consumer-groups.sh \
+    --bootstrap-server localhost:9092 \
+    --list
+```
+
+**3. 특정 그룹의 상세 정보 및 오프셋 확인:**
+```bash
+$ bin/kafka-consumer-groups.sh \
+    --bootstrap-server localhost:9092 \
+    --group email-send-group \
+    --describe
+```
+- `CURRENT-OFFSET`: 해당 그룹이 마지막으로 읽고 처리를 완료한 오프셋 번호(다음에 읽을 번호)를 나타냅니다.
+
+---
+
+## 안 읽은 메시지부터 처리하기 (순차적 처리) <a name="sequential-processing"></a>
+
+컨슈머 그룹을 활용하는 가장 큰 이유는 **중복 처리를 방지**하고 **안 읽은 메시지부터 이어서 처리**하기 위함입니다.
+
+1. **메시지 추가**: 프로듀서가 새로운 메시지(`hello5`)를 보냅니다. (현재 오프셋 4)
+2. **이어서 읽기**: 이전에 사용했던 그룹(`email-send-group`)으로 다시 실행하면, 이미 읽은 `hello1~4`는 건너뛰고 `hello5`부터 가져옵니다.
+3. **오프셋 업데이트**: 처리가 완료되면 `CURRENT-OFFSET`이 5로 업데이트됩니다.
+
+```mermaid
+sequenceDiagram
+    participant T as 토픽 (Topic)
+    participant G as 컨슈머 그룹 (email-send-group)
+    
+    Note over T: Offset 0~3: hello1~4 (이미 읽음)
+    Note over T: Offset 4: hello5 (새 메시지)
+    
+    G->>T: 메시지 요청 (Current Offset: 4)
+    T-->>G: Offset 4 (hello5) 전달
+    Note over G: hello5 처리 완료
+    G->>T: Offset 업데이트 (Current Offset: 5)
+```
+
+### 정리
+실제 서비스에서는 동일한 요청의 중복 처리를 막기 위해 반드시 **컨슈머 그룹**을 활용해야 합니다. 오프셋을 통해 처리 상태를 기억함으로써 안정적인 시스템 운영이 가능합니다.
