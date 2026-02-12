@@ -79,7 +79,7 @@ sequenceDiagram
 
 이 구조 덕분에 데이터를 보내는 서버와 받는 서버가 서로의 상태를 몰라도 안정적으로 데이터를 주고받을 수 있다.
 
-> 더 자세한 내용은 [04. 프로듀서와 컨슈머](../04-producer-consumer/ProducerConsumer.md)에서 학습할 수 있다.
+> 더 자세한 내용은 [04. 프로듀서](../04-producer-consumer/Producer.md)에서 학습할 수 있다.
 
 ---
 
