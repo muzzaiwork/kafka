@@ -69,16 +69,16 @@ API 요청을 3번 연속으로 보낸다.
 
 ```mermaid
 graph TD
-    subgraph SingleServer [컨슈머 서버 (Spring Boot)]
-        C1[컨슈머 쓰레드 #1]
-        C2[컨슈머 쓰레드 #2]
-        C3[컨슈머 쓰레드 #3]
+    subgraph SingleServer ["컨슈머 서버 (Spring Boot)"]
+        C1["컨슈머 쓰레드 #0"]
+        C2["컨슈머 쓰레드 #1"]
+        C3["컨슈머 쓰레드 #2"]
     end
     
-    subgraph Topic [email.send 토픽]
-        P0[파티션 #0]
-        P1[파티션 #1]
-        P2[파티션 #2]
+    subgraph Topic ["email.send 토픽"]
+        P0["파티션 #0"]
+        P1["파티션 #1"]
+        P2["파티션 #2"]
     end
 
     P0 --> C1
@@ -86,7 +86,4 @@ graph TD
     P2 --> C3
     
     style SingleServer fill:#e1f5fe,stroke:#01579b
-    style C1 fill:#fff
-    style C2 fill:#fff
-    style C3 fill:#fff
 ```
