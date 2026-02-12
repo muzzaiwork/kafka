@@ -49,8 +49,12 @@ Topic: email.send  TopicId: ... PartitionCount: 1  ReplicationFactor: 3  Configs
     Topic: email.send  Partition: 0  Leader: 1  Replicas: 1, 2, 3  Isr: 1, 2, 3
 ```
 
-- **Replicas**: 이 파티션의 데이터가 저장되어 있는 노드 번호 목록이다. (1, 2, 3번 노드에 모두 존재)
-- **Isr (In-Sync Replicas)**: 현재 리더와 동기화가 잘 되어 있는 복제본 목록이다. 여기에 1, 2, 3이 모두 있다면 3대의 서버가 정상적으로 연동되어 실시간 복제를 수행하고 있다는 뜻이다.
+#### 💡 출력 항목의 의미
+- **Leader**: 현재 읽기/쓰기를 담당하는 브로커 (위 예시에서는 1번 노드)
+- **Replicas**: 이 파티션의 데이터가 저장되어 있는 노드 번호 목록 (1, 2, 3번 노드)
+- **Isr (In-Sync Replicas)**: 현재 리더와 동기화가 완벽하게 되어 있는 복제본 목록이다. 여기에 1, 2, 3이 모두 있다면 3대의 서버가 정상적으로 연동되어 실시간 복제를 수행하고 있다는 뜻이다.
+
+> 각 항목에 대한 더 자세한 설명은 [카프카 기본 아키텍처 - 토픽 세부 정보 해설](../03-architecture/Architecture.md#topic-describe-info)에서 확인할 수 있다.
 
 ### 2. 다른 브로커를 통한 접속 확인
 9092 포트뿐만 아니라 다른 브로커 포트(19092, 29092)로도 토픽 정보를 조회할 수 있어야 한다.

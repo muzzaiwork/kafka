@@ -71,9 +71,19 @@ $ bin/kafka-topics.sh \
 
 **실행 결과 (예시):**
 ```text
-Topic: email.send  TopicId: ... PartitionCount: 1  ReplicationFactor: 1  Configs: ...
-    Topic: email.send  Partition: 0  Leader: 0  Replicas: 0  Isr: 0
+Topic: email.send  TopicId: ... PartitionCount: 1  ReplicationFactor: 3  Configs: ...
+    Topic: email.send  Partition: 0  Leader: 1  Replicas: 1, 2, 3  Isr: 1, 2, 3
 ```
+
+#### 📊 토픽 세부 정보 항목 해설 <a name="topic-describe-info"></a>
+위 `describe` 명령어를 통해 출력되는 항목들의 의미는 다음과 같다.
+
+- **PartitionCount**: 해당 토픽이 가진 전체 파티션의 개수이다.
+- **ReplicationFactor**: 해당 토픽의 각 파티션이 복제된 개수(원본 포함)이다.
+- **Partition**: 현재 행이 설명하고 있는 파티션 번호이다.
+- **Leader**: 해당 파티션의 **리더(원본)** 역할을 수행하고 있는 브로커의 ID이다. 모든 읽기/쓰기 요청은 이 브로커를 통해 처리된다.
+- **Replicas**: 해당 파티션의 데이터가 복제되어 저장되어 있는 모든 브로커 ID의 목록이다.
+- **Isr (In-Sync Replicas)**: 리더와 완벽하게 동기화되어 있는 복제본(팔로워)들의 목록이다. ISR에 포함된 팔로워만이 리더 장애 시 차기 리더가 될 자격이 있다.
 
 ### 3. 토픽 삭제하기
 더 이상 사용하지 않는 토픽을 삭제한다.
