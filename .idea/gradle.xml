@@ -5,6 +5,11 @@
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/05-spring-kafka/email-send-producer" />
         <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/05-spring-kafka/email-send-producer" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>

@@ -47,6 +47,9 @@
     - [application.yml 설정을 통한 카프카 연결](./05-spring-kafka/Spring-Kafka-Setup.md#2-applicationyml-설정)
 - [Spring Boot 프로듀서 구현](./05-spring-kafka/Spring-Kafka-Producer.md)
     - [KafkaTemplate을 이용한 메시지 전송](./05-spring-kafka/Spring-Kafka-Producer.md#3-service-구현)
+- [Spring Boot 프로듀서 테스트](./05-spring-kafka/Spring-Kafka-Test.md)
+    - [기존 리소스 삭제 및 토픽 재생성](./05-spring-kafka/Spring-Kafka-Test.md#1-깔끔한-테스트를-위한-기존-리소스-삭제)
+    - [API 요청 및 메시지 전송 확인](./05-spring-kafka/Spring-Kafka-Test.md#2-spring-boot-서버-실행-및-api-요청)
 
 ### 6. 상세 동작 및 활용 (Advanced)
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)

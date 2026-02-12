@@ -4,7 +4,7 @@
 
 동일한 환경에서 실습을 진행하기 위해 아래 버전을 사용할 것을 권장한다.
 - **Spring Boot**: 3.x.x 버전
-- **JDK**: 21
+- **JDK**: 17
 
 ### 1. Spring Boot 프로젝트 셋팅
 
@@ -15,7 +15,7 @@
 - **Spring Boot**: 3.x.x
 - **Artifact / Name**: `email-send-producer`
 - **Package name**: `emailsendproducer`
-- **Java**: 21
+- **Java**: 17
 - **Dependencies**:
     - `Spring Boot DevTools`
     - `Spring Web`
