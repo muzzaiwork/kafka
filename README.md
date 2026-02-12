@@ -42,6 +42,7 @@
     - [컨슈머 그룹의 분산 처리 및 고가용성](./04-producer-consumer/Consumer.md#consumer-group)
 - [오프셋(Offset)과 소비 지점 관리](./04-producer-consumer/Offset-Management.md)
     - [안 읽은 메시지부터 처리하기 (실습)](./04-producer-consumer/Offset-Management.md#sequential-processing)
+- [컨슈머 랙(Consumer Lag)과 모니터링](./04-producer-consumer/Consumer-Lag.md)
 
 ### 5. Spring Boot와 카프카 연동 (Spring Boot & Kafka)
 - [Spring Boot 프로젝트 설정 및 연결](./05-spring-kafka/Spring-Kafka-Setup.md)
@@ -72,6 +73,7 @@
 - [파티션 메시지 분배 실습 (Sticky vs Round Robin)](./06-advanced/Partition-Distribution.md)
 - [파티션 병렬 처리 실습 (멀티 컨슈머)](./06-advanced/Partition-Parallel-Processing.md)
 - [단일 서버 병렬 처리 (Concurrency)](./06-advanced/Partition-Concurrency.md)
+- [적정 파티션 개수 계산 방법](./06-advanced/Partition-Calculation.md)
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)
 - [카프카 스트림즈와 커넥트 (Streams & Connect)](./06-advanced/Advanced.md#ecosystem)
 
