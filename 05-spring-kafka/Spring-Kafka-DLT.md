@@ -64,14 +64,53 @@ $ bin/kafka-console-consumer.sh \
 ### 4. DLT 활용 흐름도
 
 ```mermaid
-graph TD
-    A[Producer] -->|메시지 전송| B(Kafka Topic)
-    B -->|수신| C[Consumer]
-    C -->|처리 실패| D{재시도 횟수 초과?}
-    D -- No --> E[Retry Topic에서 대기 후 재시도]
-    E --> C
-    D -- Yes --> F[Dead Letter Topic으로 이동]
-    F --> G[관리자 확인 및 수동 처리]
+graph LR
+    subgraph MainTopic [메인 토픽: email.send]
+        M1[메시지 A]
+    end
+
+    subgraph RetrySystem [재시도 시스템]
+        R1[Retry Topic 1]
+        R2[Retry Topic 2]
+        RN[...]
+    end
+
+    subgraph DLT [데드 레터 토픽: email.send.dlt]
+        D1[실패한 메시지 A]
+    end
+
+    Producer[프로듀서] -->|1. 전송| MainTopic
+    MainTopic -->|2. 소비 시도| Consumer[컨슈머]
+    Consumer -->|3. 처리 실패| RetrySystem
+    RetrySystem -->|4. 일정 간격 재시도| Consumer
+    Consumer -->|5. 최종 실패| DLT
+    DLT -->|6. 사후 분석 및 수동 처리| Admin[관리자]
+
+    style MainTopic fill:#e1f5fe,stroke:#01579b
+    style RetrySystem fill:#fff3e0,stroke:#ff6f00,stroke-dasharray: 5 5
+    style DLT fill:#ffebee,stroke:#b71c1c
+    style D1 fill:#ffcdd2,stroke:#b71c1c
 ```
 
 재시도조차 실패한 메시지를 DLT에 보관함으로써 시스템의 안정성과 데이터 무결성을 확보할 수 있다.
+    
+---
+
+### 5. DLT 핸들러 활용 <a name="dlt-handler"></a>
+
+최종 실패한 메시지가 DLT로 넘어올 때, 이를 감지하여 추가적인 비즈니스 로직(관리자 알림, DB 저장 등)을 수행할 수 있다.
+
+#### @DltHandler 사용법
+
+`@RetryableTopic`이 적용된 컨슈머 클래스 내에 `@DltHandler` 어노테이션을 붙인 메서드를 작성한다.
+
+```java
+@DltHandler
+public void handleDlt(String message, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+    // DLT로 넘어온 메시지를 로그로 남기거나 알림을 보낸다.
+    System.out.println("[DLT Handler] " + topic + " 로부터 넘어온 메시지: " + message);
+}
+```
+
+- **message**: DLT로 전송된 원본 메시지 내용이다.
+- **topic**: 메시지가 넘어온 토픽 정보를 확인할 수 있다.

@@ -25,4 +25,12 @@ public class EmailController {
     emailService.sendEmail(sendEmailRequestDto);
     return ResponseEntity.ok("이메일 발송 요청 완료");
   }
+
+  @PostMapping("/retry-only")
+  public ResponseEntity<String> sendEmailRetryOnly(
+      @RequestBody SendEmailRequestDto sendEmailRequestDto
+  ) {
+    emailService.sendEmailRetryOnly(sendEmailRequestDto);
+    return ResponseEntity.ok("이메일 발송 요청 완료 (Retry Only)");
+  }
 }

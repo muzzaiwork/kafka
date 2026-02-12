@@ -29,6 +29,18 @@ public class EmailService {
     // 메시지의 value 타입을 String으로 설정했으므로 객체를 String으로 변환해서 전송한다.
     this.kafkaTemplate.send("email.send", toJsonString(emailSendMessage));
   }
+
+  public void sendEmailRetryOnly(SendEmailRequestDto request) {
+    EmailSendMessage emailSendMessage = new EmailSendMessage(
+        request.getFrom(),
+        request.getTo(),
+        request.getSubject(),
+        request.getBody()
+    );
+
+    // DLT 없이 재시도만 테스트하기 위해 다른 토픽으로 전송한다.
+    this.kafkaTemplate.send("email.send.retry-only", toJsonString(emailSendMessage));
+  }
   
   // 객체를 Json 형태의 String으로 만들어주는 메서드
   private String toJsonString(Object object) {
