@@ -11,6 +11,12 @@ $ bin/kafka-topics.sh \
     --describe --topic email.send
 ```
 
+**실행 결과:**
+```text
+Topic: email.send  TopicId: ... PartitionCount: 1  ReplicationFactor: 1  Configs: ...
+    Topic: email.send  Partition: 0  Leader: 0  Replicas: 0  Isr: 0
+```
+
 **실행 결과 분석:**
 - `PartitionCount`: 토픽이 가지고 있는 파티션의 총 개수다. (별도 옵션 없이 생성 시 기본 1개)
 - `Partition`: 파티션 번호를 나타내며, 0번부터 시작한다.
@@ -37,11 +43,24 @@ $ bin/kafka-topics.sh \
     --partitions 3
 ```
 
+**실행 결과:**
+```text
+Created topic test.topic.
+```
+
 **확인 명령어:**
 ```bash
 $ bin/kafka-topics.sh \
     --bootstrap-server localhost:9092 \
     --describe --topic test.topic
+```
+
+**실행 결과:**
+```text
+Topic: test.topic  TopicId: ... PartitionCount: 3  ReplicationFactor: 1  Configs: ...
+    Topic: test.topic  Partition: 0  Leader: 0  Replicas: 0  Isr: 0
+    Topic: test.topic  Partition: 1  Leader: 0  Replicas: 0  Isr: 0
+    Topic: test.topic  Partition: 2  Leader: 0  Replicas: 0  Isr: 0
 ```
 
 ```mermaid
@@ -69,6 +88,20 @@ $ bin/kafka-topics.sh \
     --partitions 5
 ```
 
+**실행 결과:**
+```text
+Completed updating config for topic test.topic.
+```
+
+**확인 결과:**
+```text
+$ bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic test.topic
+Topic: test.topic  TopicId: ... PartitionCount: 5  ReplicationFactor: 1  Configs: ...
+    Topic: test.topic  Partition: 0  Leader: 0  Replicas: 0  Isr: 0
+    ...
+    Topic: test.topic  Partition: 4  Leader: 0  Replicas: 0  Isr: 0
+```
+
 ### 2. 파티션 수 줄이기 (불가능)
 카프카에서는 한 번 생성된 **파티션의 수를 줄이는 것은 불가능하다.**
 
@@ -79,6 +112,11 @@ $ bin/kafka-topics.sh \
     --alter \
     --topic test.topic \
     --partitions 3
+```
+
+**실행 결과 (에러):**
+```text
+Error: org.apache.kafka.common.errors.InvalidPartitionsException: The number of partitions for a topic can only be increased. Topic test.topic currently has 5 partitions, 3 would not be an increase.
 ```
 
 **왜 줄일 수 없을까?**

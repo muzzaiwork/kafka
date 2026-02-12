@@ -41,6 +41,11 @@ $ bin/kafka-topics.sh \
     --topic email.send
 ```
 
+**실행 결과:**
+```text
+Created topic email.send.
+```
+
 ### 2. 토픽 조회하기
 생성된 토픽의 목록을 확인하거나 특정 토픽의 상세 정보를 조회한다.
 
@@ -51,11 +56,23 @@ $ bin/kafka-topics.sh \
     --list
 ```
 
+**실행 결과 (예시):**
+```text
+__consumer_offsets
+email.send
+```
+
 **특정 토픽 상세 정보 조회:**
 ```bash
 $ bin/kafka-topics.sh \
     --bootstrap-server localhost:9092 \
     --describe --topic email.send
+```
+
+**실행 결과 (예시):**
+```text
+Topic: email.send  TopicId: ... PartitionCount: 1  ReplicationFactor: 1  Configs: ...
+    Topic: email.send  Partition: 0  Leader: 0  Replicas: 0  Isr: 0
 ```
 
 ### 3. 토픽 삭제하기
@@ -65,6 +82,12 @@ $ bin/kafka-topics.sh \
 $ bin/kafka-topics.sh \
     --bootstrap-server localhost:9092 \
     --delete --topic email.send
+```
+
+**실행 결과:**
+```text
+Topic email.send is marked for deletion.
+Note: This will have no impact if delete.topic.enable is not set to true.
 ```
 
 ---

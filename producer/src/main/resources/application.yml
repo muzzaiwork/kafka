@@ -7,3 +7,6 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       # 메시지의 value 직렬화 방식: 자바 객체를 문자열(String)로 변환해서 Kafka에 전송한다.
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # (선택) 파티션 분배 방식 설정
+      # properties:
+      #   partitioner.class: org.apache.kafka.clients.producer.RoundRobinPartitioner
