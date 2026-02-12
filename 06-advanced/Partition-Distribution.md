@@ -77,9 +77,13 @@ Producer 서버를 실행하고 API 요청을 여러 번 보낸다.
 
 **실행 결과:**
 ```text
-Partition:0	{"from":"...","to":"...","subject":"...","body":"..."}
-Partition:0	{"from":"...","to":"...","subject":"...","body":"..."}
-Partition:0	{"from":"...","to":"...","subject":"...","body":"..."}
+# 작은 규모의 데이터를 연속해서 보낼 경우, 하나의 파티션에만 메시지가 들어간다.
+Partition:2	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
+Partition:2	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
+Partition:2	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
+Partition:2	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
+Partition:2	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
+Partition:2	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
 ```
 작은 규모의 데이터를 연속해서 보낼 경우, 스티키 파티셔닝에 의해 하나의 파티션에만 메시지가 몰리는 것을 확인할 수 있다.
 
