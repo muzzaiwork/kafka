@@ -10,12 +10,12 @@
 
 ```mermaid
 graph LR
-    subgraph Topic [카프카 토픽]
+    subgraph TopicFlow [카프카 토픽]
         direction LR
         M1[메시지 1] --- M2[메시지 2] --- M3[메시지 3] --- M4[메시지 4] --- M5[메시지 5]
     end
 
-    subgraph Consumer [컨슈머]
+    subgraph ConsumerPos [컨슈머]
         C[현재 처리 위치]
     end
 
@@ -24,15 +24,12 @@ graph LR
     style M1 fill:#f9f,stroke:#333,stroke-dasharray: 5 5
     style M2 fill:#f9f,stroke:#333,stroke-dasharray: 5 5
     style M3 fill:#dfd,stroke:#333,stroke-width:2px
-    style M4 fill:#fff,stroke:#333
-    style M5 fill:#fff,stroke:#333
+    style M4 fill:#f96,stroke:#333,stroke-width:2px
+    style M5 fill:#f96,stroke:#333,stroke-width:2px
     
     Note1[이미 처리됨] --- M1
     Note2[처리 중/예정] --- M3
     Note3[대기 중] --- M4
-    
-    classDef lag fill:#f96,stroke:#333,stroke-width:2px;
-    class M4,M5 lag;
 ```
 
 > **Consumer Lag**: 위 그림에서 아직 컨슈머가 도달하지 못한 **메시지 4, 5**가 바로 랙(Lag)에 해당한다. (Lag = 2)
@@ -82,7 +79,7 @@ email-send-group email.send      2          3               4               1   
 
 ```mermaid
 graph LR
-    subgraph Topic [카프카 토픽]
+    subgraph KafkaTopic [카프카 토픽]
         M0[Offset 0]
         M1[Offset 1]
         M2[Offset 2]
@@ -90,7 +87,7 @@ graph LR
         M4[Offset 4]
     end
 
-    subgraph Offsets [오프셋 지표]
+    subgraph MetricOffsets [오프셋 지표]
         CO[Current Offset: 2]
         LEO[Log End Offset: 5]
     end
@@ -103,8 +100,6 @@ graph LR
     style M2 fill:#dfd,stroke:#333,stroke-width:2px
     style M3 fill:#f96,stroke:#333
     style M4 fill:#f96,stroke:#333
-    
-    classDef lag fill:#f96,stroke:#333;
 ```
 
 ---

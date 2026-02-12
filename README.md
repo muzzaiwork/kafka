@@ -29,9 +29,10 @@
     - [Producer, Topic, Consumer의 상호작용](./03-architecture/Architecture.md#components)
 - [CLI를 활용한 토픽 관리](./03-architecture/Architecture.md#topic-cli)
     - [토픽 생성, 조회, 삭제 명령어](./03-architecture/Architecture.md#topic-cli)
-- [브로커(Broker)와 클러스터(Cluster)](./03-architecture/Architecture.md#broker)
+- [노드, 브로커, 컨트롤러, 클러스터](./03-architecture/Architecture.md#broker)
     - [브로커와 클러스터의 정의 및 역할](./03-architecture/Architecture.md#broker)
 - [리플리케이션(Replication)과 ISR](./03-architecture/Architecture.md#replication)
+    - [리더와 팔로워 파티션의 역할](./03-architecture/Architecture.md#replication)
 
 ### 4. 프로듀서와 컨슈머 (Producer & Consumer)
 - [프로듀서의 역할과 메시지 전송 방식](./04-producer-consumer/Producer.md)
