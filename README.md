@@ -59,6 +59,8 @@
     - [비동기 구조의 한계 및 보완 전략 (Retry, DLT)](./05-spring-kafka/Spring-Kafka-Async-Benefit.md#비동기-처리와의-한계와-보완-전략)
 - [Spring Boot 카프카 재시도(Retry) 구현](./05-spring-kafka/Spring-Kafka-Retry.md)
     - [@RetryableTopic을 이용한 재시도 정책 설정](./05-spring-kafka/Spring-Kafka-Retry.md#재시도retry-정책-변경하기)
+- [Spring Boot 카프카 DLT(Dead Letter Topic) 구현](./05-spring-kafka/Spring-Kafka-DLT.md)
+    - [재시도 실패 메시지 보관 및 DLT 설정](./05-spring-kafka/Spring-Kafka-DLT.md#재시도조차-실패한-메시지를-따로-보관하기-dlt)
 
 ### 6. 상세 동작 및 활용 (Advanced)
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)
