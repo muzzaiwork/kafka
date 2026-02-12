@@ -72,4 +72,29 @@ public void consume(String message) {
 
 ---
 
+## 재시도(Retry) 과정 시각화
+
+재시도 메커니즘이 동작하는 전체적인 흐름을 시퀀스 다이어그램으로 나타내면 다음과 같다.
+
+```mermaid
+sequenceDiagram
+    participant K as Kafka Topic
+    participant C as Consumer (Spring Boot)
+    participant R as Retry Topics (Internal)
+
+    K->>C: 메시지 수신 (최초 시도)
+    Note over C: 처리 중 예외 발생 (RuntimeException)
+    C->>R: 메시지 전달 (1차 재시도 대기열)
+    Note over R: 1초 대기 (Backoff delay=1000)
+    R->>C: 1차 재시도 수행
+    Note over C: 처리 중 예외 발생
+    C->>R: 메시지 전달 (2차 재시도 대기열)
+    Note over R: 2초 대기 (multiplier=2)
+    R->>C: 2차 재시도 수행
+    Note over C: ... (최대 5회까지 반복)
+    Note over C: 최종 실패 시 에러 로그 기록
+```
+
+---
+
 재시도를 여러 번 했음에도 불구하고 최종적으로 실패한 메시지는 어떻게 처리해야 할까? 다음 단계에서는 이러한 메시지를 별도로 보관하는 **Dead Letter Topic(DLT)**에 대해 학습한다.
