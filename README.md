@@ -42,9 +42,13 @@
 - [오프셋(Offset)과 소비 지점 관리](./04-producer-consumer/Offset-Management.md)
     - [안 읽은 메시지부터 처리하기 (실습)](./04-producer-consumer/Offset-Management.md#sequential-processing)
 
-### 5. 상세 동작 및 활용 (Advanced)
-- [메시지 전달 보장 (Delivery Semantics)](./05-advanced/Advanced.md)
-- [카프카 스트림즈와 커넥트 (Streams & Connect)](./05-advanced/Advanced.md#ecosystem)
+### 5. Spring Boot와 카프카 연동 (Spring Boot & Kafka)
+- [Spring Boot 프로젝트 설정 및 연결](./05-spring-kafka/Spring-Kafka-Setup.md)
+    - [application.yml 설정을 통한 카프카 연결](./05-spring-kafka/Spring-Kafka-Setup.md#2-applicationyml-설정)
+
+### 6. 상세 동작 및 활용 (Advanced)
+- [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)
+- [카프카 스트림즈와 커넥트 (Streams & Connect)](./06-advanced/Advanced.md#ecosystem)
 
 ---
 
