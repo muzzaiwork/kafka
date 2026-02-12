@@ -57,6 +57,8 @@
 - [비동기 처리의 성능 이점과 한계](./05-spring-kafka/Spring-Kafka-Async-Benefit.md)
     - [지연 시간 시뮬레이션 및 응답 속도 확인](./05-spring-kafka/Spring-Kafka-Async-Benefit.md#카프카의-비동기-처리로-인한-성능-이점-느껴보기)
     - [비동기 구조의 한계 및 보완 전략 (Retry, DLT)](./05-spring-kafka/Spring-Kafka-Async-Benefit.md#비동기-처리와의-한계와-보완-전략)
+- [Spring Boot 카프카 재시도(Retry) 구현](./05-spring-kafka/Spring-Kafka-Retry.md)
+    - [@RetryableTopic을 이용한 재시도 정책 설정](./05-spring-kafka/Spring-Kafka-Retry.md#재시도retry-정책-변경하기)
 
 ### 6. 상세 동작 및 활용 (Advanced)
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)
