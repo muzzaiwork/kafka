@@ -45,6 +45,8 @@
 ### 5. Spring Boot와 카프카 연동 (Spring Boot & Kafka)
 - [Spring Boot 프로젝트 설정 및 연결](./05-spring-kafka/Spring-Kafka-Setup.md)
     - [application.yml 설정을 통한 카프카 연결](./05-spring-kafka/Spring-Kafka-Setup.md#2-applicationyml-설정)
+- [Spring Boot 프로듀서 구현](./05-spring-kafka/Spring-Kafka-Producer.md)
+    - [KafkaTemplate을 이용한 메시지 전송](./05-spring-kafka/Spring-Kafka-Producer.md#3-service-구현)
 
 ### 6. 상세 동작 및 활용 (Advanced)
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)
