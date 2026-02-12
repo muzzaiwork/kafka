@@ -43,4 +43,15 @@ spring:
 
 ---
 
+### 3. 프로젝트 구조 확인
+
+생성된 프로젝트의 기본 구조는 다음과 같다.
+- **위치**: `05-spring-kafka/email-send-producer`
+- **주요 파일**:
+    - `build.gradle`: 의존성 및 자바 버전 설정
+    - `src/main/java/emailsendproducer/EmailSendProducerApplication.java`: 메인 애플리케이션 클래스
+    - `src/main/resources/application.yml`: 카프카 연결 설정
+
+---
+
 기본적인 Spring Boot의 카프카 설정을 완료했다. 다음 단계에서는 Spring Boot를 사용하여 카프카에 실제로 메시지를 넣는 프로듀서 코드를 작성한다.
