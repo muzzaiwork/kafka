@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 public class EmailSendConsumer {
 
   @RetryableTopic(
+      // 총 시도 횟수 (최초 시도 1회 + 재시도 4회)
       attempts = "5",
+      // 재시도 간격 설정
+      // delay: 첫 재시도 대기 시간 (1000ms = 1초)
+      // multiplier: 이전 대기 시간에 곱할 값 (1초 -> 2초 -> 4초 -> 8초 순으로 증가)
       backoff = @Backoff(delay = 1000, multiplier = 2)
   )
   @KafkaListener(
