@@ -37,6 +37,7 @@
     - [브로커와 클러스터의 정의 및 역할](./03-architecture/Architecture.md#broker)
 - [리플리케이션(Replication)과 ISR](./03-architecture/Architecture.md#replication)
     - [리더와 팔로워 파티션의 역할](./03-architecture/Architecture.md#replication)
+- [Kafka 서버는 몇 대를 운용하는 게 좋을까?](./03-architecture/Cluster-Size-Guidelines.md)
 
 ### 4. 프로듀서와 컨슈머 (Producer & Consumer)
 - [프로듀서의 역할과 메시지 전송 방식](./04-producer-consumer/Producer.md)
@@ -52,6 +53,7 @@
 ### 5. Spring Boot와 카프카 연동 (Spring Boot & Kafka)
 - [Spring Boot 프로젝트 설정 및 연결](./05-spring-kafka/Spring-Kafka-Setup.md)
     - [application.yml 설정을 통한 카프카 연결](./05-spring-kafka/Spring-Kafka-Setup.md#2-applicationyml-설정)
+    - [[실습] Kafka 서버 3대 연결하기](./05-spring-kafka/Spring-Kafka-Multi-Broker.md)
 - [Spring Boot 프로듀서 구현](./05-spring-kafka/Spring-Kafka-Producer.md)
     - [KafkaTemplate을 이용한 메시지 전송](./05-spring-kafka/Spring-Kafka-Producer.md#3-service-구현)
 - [Spring Boot 프로듀서 테스트](./05-spring-kafka/Spring-Kafka-Test.md)
