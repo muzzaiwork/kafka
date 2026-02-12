@@ -5,20 +5,21 @@
 ### 프로듀서(Producer)란?
 **메시지를 생산하는 주체**를 의미합니다. 사용자의 요청을 받아 카프카(Kafka)라는 메시지 큐에 전달할 메시지를 생성하고 전송하는 역할을 수행합니다.
 
-### 프로듀서의 핵심 동작
-1. **메시지 생성**: 처리해야 할 작업 정보(예: 이메일 발송 정보, 로그 데이터 등)를 담은 메시지를 만듭니다.
-2. **메시지 전송**: 생성된 메시지를 카프카의 특정 토픽으로 전송합니다.
-3. **비동기적 응답**: 카프카에 메시지를 전달한 직후, 실제 작업 완료 여부와 상관없이 사용자에게 즉시 응답을 보낼 수 있습니다.
+### CLI를 활용한 메시지 전송 (Producer)
+`kafka-console-producer.sh` 스크립트를 사용하여 CLI 환경에서 직접 메시지를 전송할 수 있습니다.
 
-```mermaid
-sequenceDiagram
-    participant User as 사용자
-    participant Producer as 프로듀서 (Server)
-    participant Kafka as 카프카 (MQ)
+```bash
+# 특정 토픽(email.send)에 메시지 넣기
+$ bin/kafka-console-producer.sh \
+    --bootstrap-server localhost:9092 \
+    --topic email.send
 
-    User->>Producer: 서비스 요청
-    Producer->>Kafka: 메시지 생성 및 전송
-    Producer-->>User: 즉시 응답 (성공)
+# 명령어 입력 후 전송할 메시지 작성 (Enter로 구분)
+> hello1
+> hello2
+> hello3
+
+# 종료: Ctrl + C
 ```
 
 ---
@@ -28,10 +29,39 @@ sequenceDiagram
 ### 컨슈머(Consumer)란?
 **메시지를 소비하는 주체**를 의미합니다. 카프카에 저장되어 있는 메시지를 꺼내와서 실제로 필요한 로직(비즈니스 로직)을 수행하는 역할을 합니다.
 
-### 컨슈머의 핵심 동작
-1. **메시지 폴링(Polling)**: 카프카로부터 메시지를 지속적으로 가져옵니다.
-2. **작업 수행**: 가져온 메시지에 담긴 정보를 바탕으로 실제 작업(예: 이메일 발송, 데이터 저장 등)을 처리합니다.
-3. **오프셋 업데이트**: 어디까지 메시지를 읽었는지 기록하여 중복 처리를 방지하거나 장애 복구 시 활용합니다.
+### CLI를 활용한 메시지 조회 (Consumer)
+`kafka-console-consumer.sh` 스크립트를 사용하여 토픽에 쌓인 메시지를 실시간으로 조회하거나 처음부터 읽어올 수 있습니다.
+
+**처음부터 모든 메시지 읽기:**
+```bash
+$ bin/kafka-console-consumer.sh \
+    --bootstrap-server localhost:9092 \
+    --topic email.send \
+    --from-beginning
+```
+- `--from-beginning`: 토픽의 가장 처음 메시지부터 출력합니다.
+
+---
+
+## 카프카의 메시지 보관 방식 (Persistence) <a name="persistence"></a>
+
+전통적인 메시지 큐(RabbitMQ, SQS 등)는 메시지를 읽으면 큐에서 삭제하는 방식입니다. 하지만 **카프카는 메시지를 읽어도 제거하지 않고 저장소에 유지**합니다.
+
+1. **읽기 작업**: 저장된 메시지를 단순히 '읽기'만 합니다.
+2. **다시 읽기 가능**: 메시지가 삭제되지 않으므로, `--from-beginning` 옵션을 사용하면 언제든 다시 읽어올 수 있습니다.
+3. **실시간 동기화**: 컨슈머가 켜져 있는 상태에서 프로듀서가 새로운 메시지를 보내면 실시간으로 화면에 출력되는 것을 확인할 수 있습니다.
+
+```mermaid
+sequenceDiagram
+    participant P as 프로듀서 (CLI)
+    participant K as 카프카 (Storage)
+    participant C as 컨슈머 (CLI)
+
+    P->>K: 메시지 전송 (저장)
+    K->>C: 메시지 전달 (Polling)
+    Note over K: 메시지는 삭제되지 않고 유지됨
+    K->>C: 다시 읽기 요청 시 동일 메시지 재전달 가능
+```
 
 ### 컨슈머 그룹 (Consumer Group)
 컨슈머들은 보통 **컨슈머 그룹**이라는 단위로 묶여서 동작합니다.

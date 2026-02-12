@@ -39,10 +39,12 @@
 
 ### 4. 프로듀서와 컨슈머 (Producer & Consumer)
 - [프로듀서의 역할과 메시지 전송 방식](./04-producer-consumer/ProducerConsumer.md#producer)
-    - [프로듀서의 핵심 동작 및 시퀀스](./04-producer-consumer/ProducerConsumer.md#producer)
+    - [CLI를 활용한 메시지 전송](./04-producer-consumer/ProducerConsumer.md#producer)
 - [컨슈머와 컨슈머 그룹(Consumer Group)](./04-producer-consumer/ProducerConsumer.md#consumer)
-    - [컨슈머의 폴링(Polling) 동작](./04-producer-consumer/ProducerConsumer.md#consumer)
+    - [CLI를 활용한 메시지 조회](./04-producer-consumer/ProducerConsumer.md#consumer)
     - [컨슈머 그룹의 분산 처리 및 고가용성](./04-producer-consumer/ProducerConsumer.md#consumer)
+- [카프카의 메시지 보관 방식 (Persistence)](./04-producer-consumer/ProducerConsumer.md#persistence)
+    - [메시지 읽기 후 삭제되지 않는 특징](./04-producer-consumer/ProducerConsumer.md#persistence)
 
 ### 5. 상세 동작 및 활용 (Advanced)
 - [메시지 전달 보장 (Delivery Semantics)](./05-advanced/Advanced.md)
