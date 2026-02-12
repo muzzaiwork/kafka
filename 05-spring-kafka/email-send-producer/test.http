@@ -1,4 +1,4 @@
-### 이메일 발송 요청 테스트
+### 이메일 발송 요청 테스트 (성공 케이스)
 POST http://localhost:8080/api/emails
 Content-Type: application/json
 
@@ -7,4 +7,17 @@ Content-Type: application/json
   "to": "recipient@example.com",
   "subject": "안녕하세요, 카프카 테스트입니다.",
   "body": "Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."
+}
+
+### 이메일 발송 요청 테스트 (재시도 케이스)
+# to 필드에 fail naver com 을 입력하면 컨슈머에서 의도적으로 에러를 발생시킨다.
+# 컨슈머에 설정된 RetryableTopic 정책에 따라 재시도가 수행되는 것을 로그로 확인할 수 있다.
+POST http://localhost:8080/api/emails
+Content-Type: application/json
+
+{
+  "from": "sender@example.com",
+  "to": "fail@naver.com",
+  "subject": "재시도 테스트",
+  "body": "이 요청은 컨슈머에서 실패하며 재시도 정책이 적용됩니다."
 }
