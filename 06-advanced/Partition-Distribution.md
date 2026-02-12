@@ -22,7 +22,7 @@ graph TD
     end
 
     subgraph Batch [메시지 뭉치 / Batch]
-        M1 & M2 & M3
+        B1[배치된 메시지들]
     end
 
     subgraph Topic [email.send 토픽]
@@ -31,9 +31,9 @@ graph TD
         P2[파티션 #2]
     end
 
-    Producer --> Batch
-    Batch -->|뭉탱이로 전송| P0
-    Note over P0: 메시지들이 뭉쳐서<br/>하나의 파티션에 적재됨
+    M1 & M2 & M3 --> B1
+    B1 -->|뭉탱이로 전송| P0
+    style P0 fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
 ### 2. Key가 포함된 메시지를 넣을 경우
@@ -117,6 +117,8 @@ Partition:2	{"from":"...","to":"..."}
 
 ## 요약
 
+### 라운드 로빈(Round Robin) 동작 흐름
+
 ```mermaid
 graph TD
     subgraph Producer [프로듀서]
@@ -129,9 +131,12 @@ graph TD
         P2[파티션 #2]
     end
 
-    Producer -->|메시지 1| P0
-    Producer -->|메시지 2| P1
-    Producer -->|메시지 3| P2
+    RR -->|메시지 1| P0
+    RR -->|메시지 2| P1
+    RR -->|메시지 3| P2
+    style P0 fill:#e1f5fe,stroke:#01579b
+    style P1 fill:#e1f5fe,stroke:#01579b
+    style P2 fill:#e1f5fe,stroke:#01579b
 ```
 
 라운드 로빈 방식을 사용하면 파티션 수에 맞춰 메시지가 순차적으로 분배되어, 모든 파티션을 골고루 활용할 수 있게 된다.
