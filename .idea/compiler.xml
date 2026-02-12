@@ -3,7 +3,11 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="email-send-consumer" target="17" />
+      <module name="email-send-consumer.main" target="17" />
+      <module name="email-send-consumer.test" target="17" />
       <module name="email-send-producer" target="17" />
+      <module name="email-send-producer.main" target="17" />
+      <module name="email-send-producer.test" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
