@@ -111,9 +111,12 @@ Producer 서버를 재실행하고 다시 API 요청을 보낸다.
 
 **실행 결과:**
 ```text
-Partition:0	{"from":"...","to":"..."}
-Partition:1	{"from":"...","to":"..."}
-Partition:2	{"from":"...","to":"..."}
+Partition:0	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
+Partition:1	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
+Partition:2	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
+Partition:0	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
+Partition:1	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
+Partition:2	{"from":"sender@example.com","to":"recipient@example.com","subject":"안녕하세요, 카프카 테스트입니다.","body":"Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."}
 ```
 메시지가 각 파티션에 번갈아가며 골고루 쌓이는 것을 확인할 수 있다.
 
