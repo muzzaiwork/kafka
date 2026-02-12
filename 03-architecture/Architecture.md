@@ -10,6 +10,22 @@
 
 ---
 
+## 카프카의 기본 구성 요소 (Producer, Consumer, Topic) <a name="components"></a>
+
+카프카의 전체적인 동작 흐름은 **프로듀서**, **컨슈머**, 그리고 **토픽** 간의 상호작용으로 이루어집니다.
+
+```mermaid
+graph LR
+    P[프로듀서<br/>Producer] -- "메시지 전송" --> T[카프카 토픽<br/>Topic]
+    T -- "메시지 조회(Polling)" --> C[컨슈머<br/>Consumer]
+```
+
+1. **프로듀서(Producer)**: 카프카(토픽)에 메시지(데이터)를 전달하는 주체입니다.
+2. **카프카 토픽(Topic)**: 전달받은 메시지를 카테고리별로 구분하여 보관하는 임시 저장소입니다.
+3. **컨슈머(Consumer)**: 카프카에 새로운 메시지가 생겼는지 주기적으로 체크(Polling)하다가, 데이터가 있으면 가져와서 처리하는 주체입니다.
+
+---
+
 ## CLI를 활용한 토픽 관리 <a name="topic-cli"></a>
 
 실제 운영 환경이나 실습 시 CLI(Command Line Interface)를 통해 토픽을 직접 생성하고 관리할 수 있습니다.
@@ -50,22 +66,6 @@ $ bin/kafka-topics.sh \
     --bootstrap-server localhost:9092 \
     --delete --topic email.send
 ```
-
----
-
-## 카프카의 기본 구성 요소 (Producer, Consumer, Topic) <a name="components"></a>
-
-카프카의 전체적인 동작 흐름은 **프로듀서**, **컨슈머**, 그리고 **토픽** 간의 상호작용으로 이루어집니다.
-
-```mermaid
-graph LR
-    P[프로듀서<br/>Producer] -- "메시지 전송" --> T[카프카 토픽<br/>Topic]
-    T -- "메시지 조회(Polling)" --> C[컨슈머<br/>Consumer]
-```
-
-1. **프로듀서(Producer)**: 카프카(토픽)에 메시지(데이터)를 전달하는 주체입니다.
-2. **카프카 토픽(Topic)**: 전달받은 메시지를 카테고리별로 구분하여 보관하는 임시 저장소입니다.
-3. **컨슈머(Consumer)**: 카프카에 새로운 메시지가 생겼는지 주기적으로 체크(Polling)하다가, 데이터가 있으면 가져와서 처리하는 주체입니다.
 
 ---
 
