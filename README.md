@@ -70,6 +70,7 @@
 - [파티션 할당 실습 (멀티 컨슈머)](./06-advanced/Partition-Assignment.md)
 - [토픽 파티션 관리 (조회, 설정, 변경)](./06-advanced/Partition-Management.md)
 - [파티션 메시지 분배 실습 (Sticky vs Round Robin)](./06-advanced/Partition-Distribution.md)
+- [파티션 병렬 처리 실습 (멀티 컨슈머)](./06-advanced/Partition-Parallel-Processing.md)
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)
 - [카프카 스트림즈와 커넥트 (Streams & Connect)](./06-advanced/Advanced.md#ecosystem)
 
