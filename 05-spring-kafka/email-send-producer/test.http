@@ -1,0 +1,10 @@
+### 이메일 발송 요청 테스트
+POST http://localhost:8080/api/emails
+Content-Type: application/json
+
+{
+  "from": "sender@example.com",
+  "to": "recipient@example.com",
+  "subject": "안녕하세요, 카프카 테스트입니다.",
+  "body": "Spring Boot에서 카프카로 메시지가 잘 전달되는지 확인합니다."
+}

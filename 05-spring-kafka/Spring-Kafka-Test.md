@@ -39,7 +39,10 @@ IDE에서 `EmailSendProducerApplication`을 실행하거나 터미널에서 아�
 $ ./gradlew bootRun
 ```
 
-**API 요청 (Postman 등 활용):**
+**API 요청 (Postman 또는 IntelliJ HTTP Client 활용):**
+
+IntelliJ를 사용 중이라면 프로젝트 루트에 생성된 `test.http` 파일을 활용하여 간편하게 요청을 보낼 수 있다.
+
 - **Method**: `POST`
 - **URL**: `http://localhost:8080/api/emails`
 - **Body (JSON)**:
