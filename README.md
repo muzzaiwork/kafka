@@ -51,6 +51,12 @@
 - [Spring Boot 프로듀서 테스트](./05-spring-kafka/Spring-Kafka-Test.md)
     - [기존 리소스 삭제 및 토픽 재생성](./05-spring-kafka/Spring-Kafka-Test.md#1-깔끔한-테스트를-위한-기존-리소스-삭제)
     - [API 요청 및 메시지 전송 확인](./05-spring-kafka/Spring-Kafka-Test.md#2-spring-boot-서버-실행-및-api-요청)
+- [Spring Boot 컨슈머 구현](./05-spring-kafka/Spring-Kafka-Consumer.md)
+    - [KafkaListener를 이용한 메시지 수신](./05-spring-kafka/Spring-Kafka-Consumer.md#3-메시지-객체-및-컨슈머-서비스-구현)
+    - [컨슈머 그룹 및 오프셋 자동 초기화 설정](./05-spring-kafka/Spring-Kafka-Consumer.md#2-applicationyml-설정)
+- [비동기 처리의 성능 이점과 한계](./05-spring-kafka/Spring-Kafka-Async-Benefit.md)
+    - [지연 시간 시뮬레이션 및 응답 속도 확인](./05-spring-kafka/Spring-Kafka-Async-Benefit.md#카프카의-비동기-처리로-인한-성능-이점-느껴보기)
+    - [비동기 구조의 한계 및 보완 전략 (Retry, DLT)](./05-spring-kafka/Spring-Kafka-Async-Benefit.md#비동기-처리와의-한계와-보완-전략)
 
 ### 6. 상세 동작 및 활용 (Advanced)
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)

@@ -17,6 +17,12 @@ public class EmailSendConsumer {
     EmailSendMessage emailSendMessage = EmailSendMessage.fromJson(message);
 
     // 실제 이메일 발송 로직은 생략
+    try {
+      Thread.sleep(3000); // 이메일 발송을 하는 데 3초가 걸린다고 가정
+    } catch (InterruptedException e) {
+      throw new RuntimeException("이메일 발송 실패");
+    }
+    
     System.out.println("이메일 발송 완료: " + emailSendMessage.getSubject());
   }
 }
