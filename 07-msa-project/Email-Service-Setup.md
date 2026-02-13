@@ -15,7 +15,7 @@ MSA 프로젝트의 두 번째 서비스인 **Email Service** 서버의 초기 �
 - **Spring Boot**: 3.x.x
 - **Artifact / Name**: `email-service`
 - **Package name**: `emailservice`
-- **Java**: 21 (실습 기준 버전)
+- **Java**: 17 (실습 기준 버전)
 - **Dependencies**:
     - `Spring Boot DevTools`: 개발 편의 도구
     - `Spring Web`: REST API 구현용
@@ -83,4 +83,4 @@ spring:
 
 초기 설정이 완료되었다면, 이제 User Service에서 발행한 `user.signed-up` 이벤트를 구독하여 실제 이메일 발송 기능을 구현한다.
 
-- [Email Service 구현하기 (추후 추가 예정)]
+- [[실습] 이메일 발송을 처리할 Consumer 로직 짜기](./Email-Service-Implementation.md)

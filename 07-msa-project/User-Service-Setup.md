@@ -15,7 +15,7 @@ MSA 프로젝트의 첫 번째 관문인 **User Service** 서버의 초기 환�
 - **Spring Boot**: 3.x.x
 - **Artifact / Name**: `user-service`
 - **Package name**: `userservice`
-- **Java**: 21 (실습 기준 버전)
+- **Java**: 17 (실습 기준 버전)
 - **Dependencies**:
     - `Spring Boot DevTools`: 개발 편의 도구
     - `Spring Web`: REST API 구현용

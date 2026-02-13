@@ -90,6 +90,7 @@
 - [[실습] 회원가입 API 전체 뼈대 만들기](./07-msa-project/User-Service-Implementation.md)
 - [[실습] 회원가입 비즈니스 로직 완성](./07-msa-project/User-Service-Business-Logic.md)
 - [[실습] Email Service 서버 초기 환경 설정](./07-msa-project/Email-Service-Setup.md)
+- [[실습] 이메일 발송을 처리할 Consumer 로직 짜기](./07-msa-project/Email-Service-Implementation.md)
 
 ---
 
