@@ -176,23 +176,23 @@ graph TD
         P1[프로듀서 App]
     end
 
-    subgraph KafkaClusterBox [카프카 클러스터 (3 Nodes, RF=3)]
+    subgraph KafkaClusterBox [카프카 클러스터 - 3 Nodes, RF=3]
         direction TB
         subgraph Node1 [노드 1]
             direction TB
-            P0L[<b>P0 Leader</b>]
+            P0L[P0 Leader]
             P1F1[P1 Follower]
             P2F1[P2 Follower]
         end
         subgraph Node2 [노드 2]
             direction TB
-            P1L[<b>P1 Leader</b>]
+            P1L[P1 Leader]
             P0F1[P0 Follower]
             P2F2[P2 Follower]
         end
         subgraph Node3 [노드 3]
             direction TB
-            P2L[<b>P2 Leader</b>]
+            P2L[P2 Leader]
             P0F2[P0 Follower]
             P1F2[P1 Follower]
         end
