@@ -29,7 +29,8 @@ graph LR
     end
 
     subgraph KafkaCluster [Kafka Cluster]
-        Topic[토픽: user.signup]
+        Topic[토픽: user.signed-up]
+        DLT[토픽: user.signed-up.dlt]
     end
 
     subgraph EmailService [Email Service]
@@ -38,14 +39,18 @@ graph LR
         E_App --- E_DB
     end
 
-    User((사용자)) -- "회원가입 요청" --> U_App
-    U_App -- "가입 완료 이벤트 발행" --> Topic
-    Topic -- "이벤트 수신" --> E_App
+    User((사용자)) -- "1. 회원가입 요청 (POST /api/users)" --> U_App
+    U_App -- "2. 사용자 정보 저장" --> U_DB
+    U_App -- "3. 가입 완료 이벤트 발행" --> Topic
+    Topic -- "4. 이벤트 수신 (Subscribe)" --> E_App
+    E_App -- "5. 이메일 발송 & 로그 저장" --> E_DB
+    E_App -. "6. 처리 실패 시" .-> DLT
 
     style UserService fill:#e3f2fd,stroke:#1565c0
     style EmailService fill:#f1f8e9,stroke:#33691e
     style KafkaCluster fill:#fff3e0,stroke:#e65100
     style Topic fill:#ffffff,stroke:#e65100
+    style DLT fill:#ffebee,stroke:#c62828
 ```
 
 ### 주요 설계 특징
@@ -64,4 +69,4 @@ graph LR
 
 ## ➡️ 다음 단계
 - [[실습] User Service 서버 초기 환경 설정](./User-Service-Setup.md)
-- [Email Service 구현하기 (추후 추가 예정)]
+- [[실습] Email Service 서버 초기 환경 설정](./Email-Service-Setup.md)
