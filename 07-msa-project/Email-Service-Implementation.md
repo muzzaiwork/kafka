@@ -142,6 +142,6 @@ public class UserSignedUpEventDltConsumer {
 ---
 
 ## ➡️ 다음 단계
-이제 User Service와 Email Service의 모든 핵심 로직 구현이 완료되었다. 마지막 단계에서는 두 서비스를 동시에 띄우고 전체 흐름이 정상적으로 동작하는지 최종 테스트를 진행한다.
+이메일 서비스의 구현이 완료되었다면, 이제 프로젝트의 병렬 처리와 고가용성을 보장하기 위해 카프카 서버를 백그라운드에서 실행하고 필요한 토픽들을 생성하는 설정을 진행한다.
 
-- [[실습] MSA 프로젝트 통합 테스트 및 결과 확인](./Project-Final-Test.md)
+- [[실습] 프로젝트 구조에 맞게 Kafka 셋팅하기](./Project-Kafka-Setup.md)
