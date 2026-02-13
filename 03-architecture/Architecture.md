@@ -166,6 +166,88 @@ graph TD
 
 > **실습 안내**: 실제로 하나의 서버에 여러 개의 브로커와 컨트롤러를 띄워 클러스터를 구성하는 방법은 [[실습] 카프카 서버 총 3대 셋팅하기](../02-setup/Multi-Broker-Setup.md)에서 확인할 수 있다.
 
+### ✅ [종합] 파티션 분산과 리더/팔로워 동작 구조
+
+지금까지 배운 파티션, 복제(Replication), 리더와 팔로워의 관계를 하나의 그림으로 정리하면 다음과 같다.
+
+```mermaid
+graph TD
+    subgraph Producers [프로듀서]
+        P1[프로듀서 App]
+    end
+
+    subgraph KafkaCluster [카프카 클러스터 (3 Nodes, RF=3)]
+        direction TB
+        subgraph Node1 [노드 1]
+            direction TB
+            P0L[<b>P0 Leader</b>]
+            P1F1[P1 Follower]
+            P2F1[P2 Follower]
+        end
+        subgraph Node2 [노드 2]
+            direction TB
+            P1L[<b>P1 Leader</b>]
+            P0F1[P0 Follower]
+            P2F2[P2 Follower]
+        end
+        subgraph Node3 [노드 3]
+            direction TB
+            P2L[<b>P2 Leader</b>]
+            P0F2[P0 Follower]
+            P1F2[P1 Follower]
+        end
+    end
+
+    subgraph Consumers [컨슈머 그룹]
+        C1[컨슈머 1]
+        C2[컨슈머 2]
+        C3[컨슈머 3]
+    end
+
+    %% 프로듀서는 각 파티션의 리더에게 메시지 전송
+    P1 -- "1. 메시지 분산 전송 (P0)" --> P0L
+    P1 -- "1. 메시지 분산 전송 (P1)" --> P1L
+    P1 -- "1. 메시지 분산 전송 (P2)" --> P2L
+
+    %% 리더에서 팔로워로 복제
+    P0L -. "2. 데이터 복제" .-> P0F1
+    P0L -. "2. 데이터 복제" .-> P0F2
+    P1L -. "2. 데이터 복제" .-> P1F1
+    P1L -. "2. 데이터 복제" .-> P1F2
+    P2L -. "2. 데이터 복제" .-> P2F1
+    P2L -. "2. 데이터 복제" .-> P2F2
+
+    %% 컨슈머는 리더로부터 메시지 읽기
+    P0L -- "3. 메시지 읽기" --> C1
+    P1L -- "3. 메시지 읽기" --> C2
+    P2L -- "3. 메시지 읽기" --> C3
+
+    %% 스타일 설정
+    style P0L fill:#dfd,stroke:#333,stroke-width:3px
+    style P1L fill:#dfd,stroke:#333,stroke-width:3px
+    style P2L fill:#dfd,stroke:#333,stroke-width:3px
+    style Node1 fill:#ffffff,stroke:#e65100
+    style Node2 fill:#ffffff,stroke:#e65100
+    style Node3 fill:#ffffff,stroke:#e65100
+    style KafkaCluster fill:#fff3e0,stroke:#e65100
+```
+
+#### 📊 그림으로 이해하는 핵심 동작
+1.  **파티션 분산 (Load Balancing)**:
+    *   하나의 토픽이 여러 개의 파티션(P0, P1, P2)으로 나뉘어 여러 노드에 분산 배치된다.
+    *   프로듀서는 메시지를 보낼 때 특정 파티션 규칙(라운드 로빈 등)에 따라 각 파티션의 **리더**에게 데이터를 나누어 보낸다.
+2.  **리더와 팔로워 (Replication)**:
+    *   각 파티션은 하나의 **리더(Leader)**와 여러 개의 **팔로워(Follower)**를 가진다.
+    *   **리더**: 모든 읽기/쓰기 작업이 일어나는 실제 원본이다 (그림의 진한 초록색).
+    *   **팔로워**: 리더의 데이터를 실시간으로 복제하여 유지하는 복제본이다.
+3.  **데이터 복제 (Synchronization)**:
+    *   프로듀서가 리더에게 메시지를 쓰면, 팔로워들은 리더로부터 데이터를 가져와 자신의 디스크에 복제한다.
+4.  **컨슈머 읽기**:
+    *   컨슈머 역시 각 파티션의 **리더**로부터 메시지를 읽어와 처리한다.
+    *   파티션이 여러 개이므로 여러 컨슈머가 병렬로 나누어 처리할 수 있어 성능이 향상된다.
+
+이 구조 덕분에 특정 노드(서버)가 고장 나더라도, 다른 노드에 있는 팔로워 파티션이 즉시 리더로 승격되어 서비스 중단 없이 데이터를 안전하게 보호할 수 있다.
+
 ---
 
 ## 리플리케이션(Replication)과 ISR <a name="replication"></a>
