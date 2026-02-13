@@ -63,5 +63,5 @@ graph LR
 ---
 
 ## ➡️ 다음 단계
-- [User Service 구현하기 (추후 추가 예정)]
+- [[실습] User Service 서버 초기 환경 설정](./User-Service-Setup.md)
 - [Email Service 구현하기 (추후 추가 예정)]
