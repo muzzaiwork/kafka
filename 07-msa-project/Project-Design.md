@@ -21,64 +21,82 @@
 ## ✅ 프로젝트 아키텍처
 
 ```mermaid
-graph LR
-    subgraph UserService [User Service]
-        U_App[Spring Boot]
-        U_DB[(H2 Database)]
-        U_App --- U_DB
+graph TD
+    subgraph Client [사용자 환경]
+        User((사용자))
     end
 
-    subgraph KafkaCluster [Kafka Cluster: 3 Nodes, RF=3]
+    subgraph UserService [User Service - Producer]
+        direction TB
+        U_Controller[User Controller]
+        U_Service[User Service]
+        U_DB[(H2 Database)]
+        
+        U_Controller --> U_Service
+        U_Service --- U_DB
+    end
+
+    subgraph KafkaCluster [Kafka Cluster - 3 Nodes, RF=3]
         direction TB
         subgraph Broker1 [Node 1]
-            P0_L[P0 Leader]
-            P1_F1[P1 Follower]
-            P2_F2[P2 Follower]
+            P0L[P0 Leader]
+            P1F1[P1 Follower]
+            P2F1[P2 Follower]
         end
         subgraph Broker2 [Node 2]
-            P1_L[P1 Leader]
-            P0_F1[P0 Follower]
-            P2_F1[P2 Follower]
+            P1L[P1 Leader]
+            P0F1[P0 Follower]
+            P2F2[P2 Follower]
         end
         subgraph Broker3 [Node 3]
-            P2_L[P2 Leader]
-            P0_F2[P0 Follower]
-            P1_F2[P1 Follower]
+            P2L[P2 Leader]
+            P0F2[P0 Follower]
+            P1F2[P1 Follower]
         end
+        
         Topic((user.signed-up))
         DLT_Topic((user.signed-up.dlt))
     end
 
-    subgraph EmailService [Email Service]
-        E_App[Spring Boot]
+    subgraph EmailService [Email Service - Consumer]
+        direction TB
+        E_Consumer[Email Consumer]
+        E_Service[Email Service Logic]
         E_DB[(H2 Database)]
-        E_App --- E_DB
+        
+        E_Consumer --> E_Service
+        E_Service --- E_DB
     end
 
-    User((사용자)) -- "1. 회원가입 요청 (POST /api/users)" --> U_App
-    U_App -- "2. 사용자 정보 저장" --> U_DB
-    U_App -- "3. 가입 완료 이벤트 발행" --> Topic
-    Topic -- "4. 이벤트 수신 (Subscribe)" --> E_App
-    E_App -- "5. 이메일 발송 & 로그 저장" --> E_DB
-    E_App -. "6. 처리 실패 시 DLT 발행" .-> DLT_Topic
+    %% 데이터 흐름
+    User -- "1. 회원가입 요청" --> U_Controller
+    U_Service -- "2. 사용자 정보 저장" --> U_DB
+    U_Service -- "3. 가입 이벤트 발행" --> Topic
+    
+    Topic -- "4. 이벤트 수신 (Subscribe)" --> E_Consumer
+    E_Service -- "5. 이메일 발송 & 로그 저장" --> E_DB
+    E_Consumer -. "6. 처리 실패 시 DLT 발행" .-> DLT_Topic
 
+    %% 스타일 설정
+    style User fill:#ffffff,stroke:#333
     style UserService fill:#e3f2fd,stroke:#1565c0
     style EmailService fill:#f1f8e9,stroke:#33691e
     style KafkaCluster fill:#fff3e0,stroke:#e65100
     style Broker1 fill:#ffffff,stroke:#e65100
     style Broker2 fill:#ffffff,stroke:#e65100
     style Broker3 fill:#ffffff,stroke:#e65100
-    style P0_L fill:#dfd,stroke:#333
-    style P1_L fill:#dfd,stroke:#333
-    style P2_L fill:#dfd,stroke:#333
+    style P0L fill:#dfd,stroke:#333
+    style P1L fill:#dfd,stroke:#333
+    style P2L fill:#dfd,stroke:#333
     style Topic fill:#ffffff,stroke:#e65100
     style DLT_Topic fill:#ffffff,stroke:#e65100,stroke-dasharray: 5 5
 ```
 
 ### 주요 설계 특징
-- **서비스 분리**: 사용자 관리와 이메일 발송이라는 서로 다른 도메인을 독립적인 서버로 구성한다.
-- **데이터베이스 분리**: 각 서비스는 자신만의 DB(H2)를 소유하며, 다른 서비스의 DB에 직접 접근하지 않는다.
-- **느슨한 결합(Loose Coupling)**: User Service는 Email Service가 살아있는지, 처리에 성공했는지 알 필요가 없다. 오직 Kafka에 메시지를 전달하는 역할만 수행한다.
+- **서비스 분리 (Microservices)**: 사용자 관리(User)와 이메일 발송(Email) 도메인을 독립적인 서버로 구성하여 각각의 책임이 명확하다.
+- **데이터베이스 분리 (Database per Service)**: 각 서비스는 자신만의 독립적인 DB(H2)를 소유하며, 데이터 오염이나 강한 결합을 방지한다.
+- **이벤트 기반 비동기 통신 (Event-Driven)**: User Service는 가입 사실을 Kafka에 던지기만 할 뿐, Email Service의 상태나 결과에 영향을 받지 않아 성능과 가용성이 높다.
+- **고가용성 및 안정성**: 3대의 브로커와 레플리케이션(RF=3) 설정을 통해 서버 장애 시에도 데이터를 보호하며, DLT를 통해 실패한 메시지에 대한 사후 처리가 가능하다.
 
 ---
 
