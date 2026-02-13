@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+      - localhost:19092
+      - localhost:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        partitioner.class: org.apache.kafka.clients.producer.RoundRobinPartitioner
+
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:userDB
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
