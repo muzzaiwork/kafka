@@ -58,6 +58,7 @@ graph TD
         end
         
         TopicFlow{user.signed-up<br/>Partitioned}
+        DLT_Topic{{user.signed-up.dlt<br/>Dead Letter Topic}}
     end
 
     subgraph EmailService [Email Service - Consumer Group]
@@ -93,6 +94,7 @@ graph TD
     P2L -- "4. 구독 (P2)" --> E_Consumer3
     
     E_Service -- "5. 이메일 발송 & 로그 저장" --> E_DB
+    E_Service -. "6. 처리 실패 시 DLT 발행" .-> DLT_Topic
 
     %% 스타일 설정
     style User fill:#ffffff,stroke:#333
@@ -106,6 +108,7 @@ graph TD
     style P1L fill:#dfd,stroke:#333,stroke-width:2px
     style P2L fill:#dfd,stroke:#333,stroke-width:2px
     style TopicFlow fill:#fff,stroke:#e65100
+    style DLT_Topic fill:#fff,stroke:#e65100,stroke-dasharray: 5 5
 ```
 
 ### ✅ 상세 동작 메커니즘
