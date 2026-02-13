@@ -88,6 +88,7 @@
 - [간단한 MSA 프로젝트 설계](./07-msa-project/Project-Design.md)
 - [[실습] User Service 서버 초기 환경 설정](./07-msa-project/User-Service-Setup.md)
 - [[실습] 회원가입 API 전체 뼈대 만들기](./07-msa-project/User-Service-Implementation.md)
+- [[실습] 회원가입 비즈니스 로직 완성](./07-msa-project/User-Service-Business-Logic.md)
 
 ---
 

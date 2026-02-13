@@ -136,4 +136,4 @@ public class UserService {
 
 API의 뼈대가 완성되었다면, 이제 실제 DB에 사용자를 저장하고 가입 성공 시 Kafka 토픽(`user.signup`)으로 메시지를 발행하는 로직을 완성한다.
 
-- [회원가입 로직 완성 및 Kafka 메시지 발행 (추후 추가 예정)]
+- [[실습] 회원가입 로직 완성 및 Kafka 메시지 발행](./User-Service-Business-Logic.md)
