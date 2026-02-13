@@ -36,67 +36,90 @@ graph TD
         U_Service --- U_DB
     end
 
-    subgraph KafkaCluster [Kafka Cluster - 3 Nodes, RF=3]
+    subgraph KafkaClusterBox [카프카 클러스터 - 3 Nodes, 3 Partitions, RF=3]
         direction TB
-        subgraph Broker1 [Node 1]
+        subgraph Node1 [노드 1]
+            direction TB
             P0L[P0 Leader]
             P1F1[P1 Follower]
             P2F1[P2 Follower]
         end
-        subgraph Broker2 [Node 2]
+        subgraph Node2 [노드 2]
+            direction TB
             P1L[P1 Leader]
             P0F1[P0 Follower]
             P2F2[P2 Follower]
         end
-        subgraph Broker3 [Node 3]
+        subgraph Node3 [노드 3]
+            direction TB
             P2L[P2 Leader]
             P0F2[P0 Follower]
             P1F2[P1 Follower]
         end
         
-        Topic((user.signed-up))
-        DLT_Topic((user.signed-up.dlt))
+        TopicFlow{user.signed-up<br/>Partitioned}
     end
 
-    subgraph EmailService [Email Service - Consumer]
+    subgraph EmailService [Email Service - Consumer Group]
         direction TB
-        E_Consumer[Email Consumer]
+        E_Consumer1[Email Consumer 1]
+        E_Consumer2[Email Consumer 2]
+        E_Consumer3[Email Consumer 3]
         E_Service[Email Service Logic]
         E_DB[(H2 Database)]
         
-        E_Consumer --> E_Service
+        E_Consumer1 & E_Consumer2 & E_Consumer3 --> E_Service
         E_Service --- E_DB
     end
 
-    %% 데이터 흐름
+    %% 1. 클라이언트 요청
     User -- "1. 회원가입 요청" --> U_Controller
     U_Service -- "2. 사용자 정보 저장" --> U_DB
-    U_Service -- "3. 가입 이벤트 발행" --> Topic
     
-    Topic -- "4. 이벤트 수신 (Subscribe)" --> E_Consumer
+    %% 3. 프로듀서가 파티션 리더들에게 메시지 분산 전송
+    U_Service -- "3. 메시지 분산 전송" --> TopicFlow
+    TopicFlow -- "P0 (Node 1)" --> P0L
+    TopicFlow -- "P1 (Node 2)" --> P1L
+    TopicFlow -- "P2 (Node 3)" --> P2L
+
+    %% 4. 리더에서 팔로워로 내부 복제 (카프카 내부 동작)
+    P0L -. "복제" .-> P0F1 & P0F2
+    P1L -. "복제" .-> P1F1 & P1F2
+    P2L -. "복제" .-> P2F1 & P2F2
+
+    %% 5. 컨슈머가 각 파티션의 리더로부터 메시지 수신
+    P0L -- "4. 구독 (P0)" --> E_Consumer1
+    P1L -- "4. 구독 (P1)" --> E_Consumer2
+    P2L -- "4. 구독 (P2)" --> E_Consumer3
+    
     E_Service -- "5. 이메일 발송 & 로그 저장" --> E_DB
-    E_Consumer -. "6. 처리 실패 시 DLT 발행" .-> DLT_Topic
 
     %% 스타일 설정
     style User fill:#ffffff,stroke:#333
     style UserService fill:#e3f2fd,stroke:#1565c0
     style EmailService fill:#f1f8e9,stroke:#33691e
-    style KafkaCluster fill:#fff3e0,stroke:#e65100
-    style Broker1 fill:#ffffff,stroke:#e65100
-    style Broker2 fill:#ffffff,stroke:#e65100
-    style Broker3 fill:#ffffff,stroke:#e65100
-    style P0L fill:#dfd,stroke:#333
-    style P1L fill:#dfd,stroke:#333
-    style P2L fill:#dfd,stroke:#333
-    style Topic fill:#ffffff,stroke:#e65100
-    style DLT_Topic fill:#ffffff,stroke:#e65100,stroke-dasharray: 5 5
+    style KafkaClusterBox fill:#fff3e0,stroke:#e65100
+    style Node1 fill:#ffffff,stroke:#e65100
+    style Node2 fill:#ffffff,stroke:#e65100
+    style Node3 fill:#ffffff,stroke:#e65100
+    style P0L fill:#dfd,stroke:#333,stroke-width:2px
+    style P1L fill:#dfd,stroke:#333,stroke-width:2px
+    style P2L fill:#dfd,stroke:#333,stroke-width:2px
+    style TopicFlow fill:#fff,stroke:#e65100
 ```
 
-### 주요 설계 특징
-- **서비스 분리 (Microservices)**: 사용자 관리(User)와 이메일 발송(Email) 도메인을 독립적인 서버로 구성하여 각각의 책임이 명확하다.
-- **데이터베이스 분리 (Database per Service)**: 각 서비스는 자신만의 독립적인 DB(H2)를 소유하며, 데이터 오염이나 강한 결합을 방지한다.
-- **이벤트 기반 비동기 통신 (Event-Driven)**: User Service는 가입 사실을 Kafka에 던지기만 할 뿐, Email Service의 상태나 결과에 영향을 받지 않아 성능과 가용성이 높다.
-- **고가용성 및 안정성**: 3대의 브로커와 레플리케이션(RF=3) 설정을 통해 서버 장애 시에도 데이터를 보호하며, DLT를 통해 실패한 메시지에 대한 사후 처리가 가능하다.
+### ✅ 상세 동작 메커니즘
+1. **파티션 분산 처리 (Partitioning)**:
+   - 토픽 `user.signed-up`은 3개의 파티션으로 나뉘어 있으며, 각 파티션의 **리더**가 서로 다른 노드(1, 2, 3)에 골고루 분산되어 부하를 분산한다.
+   - User Service(Producer)는 라운드 로빈 방식을 통해 P0, P1, P2 리더들에게 메시지를 순차적으로 전송한다.
+
+2. **리더와 팔로워의 역할 (Leader/Follower)**:
+   - **리더 (Leader)**: 그림의 연한 녹색 노드들로, 실제 메시지 생산(Write)과 소비(Read)가 일어나는 핵심 주체다.
+   - **팔로워 (Follower)**: 리더 노드의 데이터를 실시간으로 복제하여 저장하며, 장애 발생 시 리더 자리를 이어받을 준비를 한다.
+
+3. **컨슈머 그룹의 병렬 처리 (Parallel Processing)**:
+   - Email Service는 3개의 컨슈머가 하나의 그룹으로 묶여 각 파티션의 리더로부터 메시지를 나누어 읽는다.
+   - 이를 통해 대량의 회원가입 이벤트를 지연 없이 빠르게 처리할 수 있다.
 
 ---
 
