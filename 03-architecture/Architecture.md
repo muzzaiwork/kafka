@@ -176,7 +176,7 @@ graph TD
         P1[프로듀서 App]
     end
 
-    subgraph KafkaCluster [카프카 클러스터 (3 Nodes, RF=3)]
+    subgraph KafkaClusterBox [카프카 클러스터 (3 Nodes, RF=3)]
         direction TB
         subgraph Node1 [노드 1]
             direction TB
@@ -229,7 +229,7 @@ graph TD
     style Node1 fill:#ffffff,stroke:#e65100
     style Node2 fill:#ffffff,stroke:#e65100
     style Node3 fill:#ffffff,stroke:#e65100
-    style KafkaCluster fill:#fff3e0,stroke:#e65100
+    style KafkaClusterBox fill:#fff3e0,stroke:#e65100
 ```
 
 #### 📊 그림으로 이해하는 핵심 동작
