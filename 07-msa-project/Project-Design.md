@@ -28,9 +28,24 @@ graph LR
         U_App --- U_DB
     end
 
-    subgraph KafkaCluster [Kafka Cluster]
-        Topic[토픽: user.signed-up]
-        DLT[토픽: user.signed-up.dlt]
+    subgraph KafkaCluster [Kafka Cluster: 3 Nodes, RF=3]
+        direction TB
+        subgraph Broker1 [Node 1]
+            P0_L[P0 Leader]
+            P1_F1[P1 Follower]
+            P2_F2[P2 Follower]
+        end
+        subgraph Broker2 [Node 2]
+            P1_L[P1 Leader]
+            P0_F1[P0 Follower]
+            P2_F1[P2 Follower]
+        end
+        subgraph Broker3 [Node 3]
+            P2_L[P2 Leader]
+            P0_F2[P0 Follower]
+            P1_F2[P1 Follower]
+        end
+        Topic((user.signed-up))
     end
 
     subgraph EmailService [Email Service]
@@ -44,13 +59,20 @@ graph LR
     U_App -- "3. 가입 완료 이벤트 발행" --> Topic
     Topic -- "4. 이벤트 수신 (Subscribe)" --> E_App
     E_App -- "5. 이메일 발송 & 로그 저장" --> E_DB
-    E_App -. "6. 처리 실패 시" .-> DLT
+    E_App -. "6. 처리 실패 시 (DLT)" .-> Broker1
+    E_App -. "6. 처리 실패 시 (DLT)" .-> Broker2
+    E_App -. "6. 처리 실패 시 (DLT)" .-> Broker3
 
     style UserService fill:#e3f2fd,stroke:#1565c0
     style EmailService fill:#f1f8e9,stroke:#33691e
     style KafkaCluster fill:#fff3e0,stroke:#e65100
+    style Broker1 fill:#ffffff,stroke:#e65100
+    style Broker2 fill:#ffffff,stroke:#e65100
+    style Broker3 fill:#ffffff,stroke:#e65100
+    style P0_L fill:#dfd,stroke:#333
+    style P1_L fill:#dfd,stroke:#333
+    style P2_L fill:#dfd,stroke:#333
     style Topic fill:#ffffff,stroke:#e65100
-    style DLT fill:#ffebee,stroke:#c62828
 ```
 
 ### 주요 설계 특징
