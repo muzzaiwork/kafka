@@ -46,6 +46,7 @@ graph LR
             P1_F2[P1 Follower]
         end
         Topic((user.signed-up))
+        DLT_Topic((user.signed-up.dlt))
     end
 
     subgraph EmailService [Email Service]
@@ -59,9 +60,7 @@ graph LR
     U_App -- "3. 가입 완료 이벤트 발행" --> Topic
     Topic -- "4. 이벤트 수신 (Subscribe)" --> E_App
     E_App -- "5. 이메일 발송 & 로그 저장" --> E_DB
-    E_App -. "6. 처리 실패 시 (DLT)" .-> Broker1
-    E_App -. "6. 처리 실패 시 (DLT)" .-> Broker2
-    E_App -. "6. 처리 실패 시 (DLT)" .-> Broker3
+    E_App -. "6. 처리 실패 시 DLT 발행" .-> DLT_Topic
 
     style UserService fill:#e3f2fd,stroke:#1565c0
     style EmailService fill:#f1f8e9,stroke:#33691e
@@ -73,6 +72,7 @@ graph LR
     style P1_L fill:#dfd,stroke:#333
     style P2_L fill:#dfd,stroke:#333
     style Topic fill:#ffffff,stroke:#e65100
+    style DLT_Topic fill:#ffffff,stroke:#e65100,stroke-dasharray: 5 5
 ```
 
 ### 주요 설계 특징
