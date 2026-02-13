@@ -84,6 +84,9 @@
 - [메시지 전달 보장 (Delivery Semantics)](./06-advanced/Advanced.md)
 - [카프카 스트림즈와 커넥트 (Streams & Connect)](./06-advanced/Advanced.md#ecosystem)
 
+### 7. MSA 프로젝트 실습 (MSA Project)
+- [간단한 MSA 프로젝트 설계](./07-msa-project/Project-Design.md)
+
 ---
 
 *본 목차는 학습 진행 상황에 따라 업데이트될 예정이다.*
