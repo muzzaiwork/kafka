@@ -91,6 +91,6 @@ public class UserService {
 ---
 
 ## ➡️ 다음 단계
-이제 User Service의 구현이 완료되었다. 다음 단계에서는 Kafka로부터 이벤트를 수신하여 실제로 이메일을 발송하는 처리를 담당할 **Email Service**를 구축한다.
+이제 User Service의 구현이 완료되었다. 다음 단계에서는 Kafka로부터 이벤트를 수신하여 실제로 이메일을 발송하는 처리를 담당할 **Email Service**의 초기 환경을 설정한다.
 
-- [Email Service 구현하기 (추후 추가 예정)]
+- [[실습] Email Service 서버 초기 환경 설정](./Email-Service-Setup.md)

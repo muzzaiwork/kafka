@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+spring:
+  kafka:
+    bootstrap-servers:
+      - 3.39.193.254:9092
+      - 3.39.193.254:19092
+      - 3.39.193.254:29092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:emailDB
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
