@@ -21,9 +21,15 @@
       <module name="email-send-producer" options="-parameters" />
       <module name="email-send-producer.main" options="-parameters" />
       <module name="email-send-producer.test" options="-parameters" />
+      <module name="email-service" options="-parameters" />
+      <module name="email-service.main" options="-parameters" />
+      <module name="email-service.test" options="-parameters" />
       <module name="producer" options="-parameters" />
       <module name="producer.main" options="-parameters" />
       <module name="producer.test" options="-parameters" />
+      <module name="user-service" options="-parameters" />
+      <module name="user-service.main" options="-parameters" />
+      <module name="user-service.test" options="-parameters" />
     </option>
   </component>
 </project>
